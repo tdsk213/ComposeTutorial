@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -36,11 +38,103 @@ class MainActivity : ComponentActivity() {
                     MessageCard(Message("Vitalik", "Jetpack Compose"))
                 }
             }
+            PreviewConversation()
 //            PreviewMessageCard()
         }
     }
 
     data class Message(val author: String, val body: String)
+
+    @Composable
+    fun Conversation(messages: List<Message>) {
+        LazyColumn {
+            items(messages) { message ->
+                MessageCard(message)
+            }
+        }
+    }
+
+    @Preview
+    @Composable
+    fun PreviewConversation() {
+        ComposeTutorialTheme {
+            Conversation(SampleData.conversationSample)
+        }
+    }
+
+    /**
+     * SampleData for Jetpack Compose Tutorial
+     */
+    object SampleData {
+        // Sample conversation data
+        val conversationSample = listOf(
+            Message(
+                "Vitalik",
+                "Test...Test...Test..."
+            ),
+            Message(
+                "Vitalik",
+                """List of Android versions:
+            |Android KitKat (API 19)
+            |Android Lollipop (API 21)
+            |Android Marshmallow (API 23)
+            |Android Nougat (API 24)
+            |Android Oreo (API 26)
+            |Android Pie (API 28)
+            |Android 10 (API 29)
+            |Android 11 (API 30)
+            |Android 12 (API 31)""".trim()
+            ),
+            Message(
+                "Vitalik",
+                """I think Kotlin is my favorite programming language.
+            |It's so much fun!""".trim()
+            ),
+            Message(
+                "Vitalik",
+                "Searching for alternatives to XML layouts..."
+            ),
+            Message(
+                "Vitalik",
+                """Hey, take a look at Jetpack Compose, it's great!
+            |It's the Android's modern toolkit for building native UI.
+            |It simplifies and accelerates UI development on Android.
+            |Less code, powerful tools, and intuitive Kotlin APIs :)""".trim()
+            ),
+            Message(
+                "Vitalik",
+                "It's available from API 21+ :)"
+            ),
+            Message(
+                "Vitalik",
+                "Writing Kotlin for UI seems so natural, Compose where have you been all my life?"
+            ),
+            Message(
+                "Vitalik",
+                "Android Studio next version's name is Arctic Fox"
+            ),
+            Message(
+                "Vitalik",
+                "Android Studio Arctic Fox tooling for Compose is top notch ^_^"
+            ),
+            Message(
+                "Vitalik",
+                "I didn't know you can now run the emulator directly from Android Studio"
+            ),
+            Message(
+                "Vitalik",
+                "Compose Previews are great to check quickly how a composable layout looks like"
+            ),
+            Message(
+                "Vitalik",
+                "Previews are also interactive after enabling the experimental setting"
+            ),
+            Message(
+                "Vitalik",
+                "Have you tried writing build.gradle with KTS?"
+            ),
+        )
+    }
 
     @Composable
     fun MessageCard(msg: Message) {
