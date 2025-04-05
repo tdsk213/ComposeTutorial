@@ -4,6 +4,8 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.Image
@@ -156,8 +158,12 @@ class MainActivity : ComponentActivity() {
             )
 
             Spacer(modifier = Modifier.width(10.dp))
-
             var isExpanded by remember { mutableStateOf(false) }
+
+            val surfaceColor by animateColorAsState(
+                if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
+            )
+
 
             Column(modifier = Modifier.clickable { isExpanded = !isExpanded }) {
 
@@ -169,7 +175,12 @@ class MainActivity : ComponentActivity() {
 
                 Spacer(modifier = Modifier.height(4.dp))
 
-                Surface(shape = MaterialTheme.shapes.medium, shadowElevation = 1.dp) {
+                Surface(
+                    shape = MaterialTheme.shapes.medium,
+                    shadowElevation = 1.dp,
+                    color = surfaceColor,
+                    modifier = Modifier.animateContentSize().padding(1.dp)
+                ) {
                     Text(
                         text = msg.body,
                         modifier = Modifier.padding(all = 4.dp),
@@ -195,7 +206,7 @@ class MainActivity : ComponentActivity() {
 
         ComposeTutorialTheme {
             Surface {
-                MessageCard(msg = Message("Vitalik", "Feed me!"))
+//                MessageCard(msg = Message("Vitalik", "Feed me!"))
             }
         }
     }
